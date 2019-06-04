@@ -1,60 +1,62 @@
 <template>
     <div>
         <div id="editor">
-            <iframe :src="src">
-
-                sdfsdgf
+            <iframe :src="src" :style="style" ref="iframe">
             </iframe>
         </div>
 
-       <el-button @click="handleGetPoint"> 获取光标位置 </el-button>
        <el-button @click="setContent"> 光标位置插入文字 </el-button>
-
     </div>
 </template>
 
 <script>
+
 export default {
     name:'aaaaa',
     data(){
         return {
             ue:'',
-            src:'./richContent.html'
+            src:'./richContent.html',
+            style:{
+                width:'100%',
+                height:'100%',
+                border:'none'
+            },
+            index:0
         }
     },
     created(){
-    //   window.UE.delEditor('editor');
+       window.richText = (t)=>{
+           this.upContent(t)
+       }
     },
     mounted(){
         
     },
     methods:{
-        handleGetPoint(){
-            let textDom = window.document.getElementById('editor')
-            let anchorNode = this.getSelection().anchorOffset
-
-            console.log(anchorNode)
-
+        getRichText(){
+            //获取富文本元素
+            let richText = this.$refs.iframe.contentWindow.richText;
+            return richText;
         },
-        getSelection(){
-            // 获取光标位置 anchorOffset 最后位置
-            //文本 anchorNode
-            //  选择位置开始的地方 focusOffset
-            let sel = window.getSelection();
-            console.log(sel)
-            return sel;
+        setContent(){
+            this.index ++ 
+            this.getRichText().setContent({
+                type:'a',
+                textValue:'1234'+this.index,
+            })
         },
-        setContent(content){
-            this.getSelection().getRangeAt(0).insertNode(document.createTextNode("<p>插入的值</p>"))
+        upContent(t){
+            console.log(t)
         }
     }
 }
 </script>
 <style lang="scss" scoped>
-   #editor{
-       width:50%;
-       height:500px;
-       border: 1px solid #ccc;
-       margin: 20px;
-   }
-</style>
+    #editor{
+       width:50% ;
+       height:500px ;
+       border: 1px solid #ccc ;
+       margin: 20px ;
+    }
+ </style> 

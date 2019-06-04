@@ -5,13 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        html,body{
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
 </head>
-<body>
-    <div id="editor" contenteditable="true" >
-        <div>
-            aaaa
-        </div>
-    
-    </div>
+<body contenteditable="true">
+   111
 </body>
+<script>
+    function modfiy(e){
+       window.parent.richText(JSON.parse(e.target.dataset.option))
+    }
+    var richText = {
+        init(){
+           document.querySelector('body').focus()
+           console.log(this._currentRange)
+        },
+        handleGetPoint(){
+            let textDom = window.document.getElementById('editor')
+            let anchorNode = this.getSelection().anchorOffset
+
+            console.log(anchorNode)
+
+        },
+        getSelection(){
+            // 获取光标位置 anchorOffset 最后位置
+            //文本 anchorNode
+            //  选择位置开始的地方 focusOffset
+            let sel = document.getSelection();
+            console.log(sel)
+            return sel;
+        },
+        setContent(content){
+            //let a = document.createElement('a');
+               // a.setAttribute('data-option',JSON.stringify(content))
+               // a.innerHTML=content.textValue;
+               // this.getSelection().getRangeAt(0).insertNode(a)
+               let str = `<a data-option="111">${content.textValue} </a>`
+                document.execCommand('insertHTML',false,str)
+                this.init()
+                this.addEvent()
+        },
+        addEvent(){
+            let bObj = document.querySelector("a"); 
+            bObj.addEventListener("click",modfiy,false);
+        }
+    }
+
+    
+        
+        
+
+    richText.init();
+
+    
+
+</script>
 </html>
