@@ -6,6 +6,8 @@
         </div>
 
        <el-button @click="setContent"> 光标位置插入文字 </el-button>
+<el-button @click="getSelection"> 获取光标位置 </el-button>
+       
     </div>
 </template>
 
@@ -40,14 +42,19 @@ export default {
             return richText;
         },
         setContent(){
-            this.index ++ 
+            this.index ++ ;
+            let value = prompt()
             this.getRichText().setContent({
-                type:'a',
-                textValue:'1234'+this.index,
+                'type':'a',
+                'textValue':value,
+                'href':'http://www.baidu.com'
             })
         },
         upContent(t){
             console.log(t)
+        },
+        getSelection(){
+            console.log(this.getRichText().getSelection())
         }
     }
 }
