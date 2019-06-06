@@ -38,6 +38,11 @@ export default {
     created(){
         this.form = this.injectData;
     },
+    watch:{
+        injectData(val){
+            this.form = val
+        }
+    },
     methods:{
         getData(){
             return this.form

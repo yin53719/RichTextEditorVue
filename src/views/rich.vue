@@ -1,16 +1,20 @@
 <template>
     <div>
-        <div id="editor">
-            <iframe :src="src" :style="style" ref="iframe"></iframe>
+        <div id="richText" ref="richText">
+            <!-- <iframe :src="src" :style="style" ref="iframe"></iframe> -->
+        </div>
+        <div style="margin-top:10px;">
+             <el-button @click="pushContent('LINK')"> 插入链接 </el-button>
+            <el-button @click="pushContent('IMG')"> 插入图片 </el-button>
+            <el-button @click="pushContent('VIDEO')"> 插入视频 </el-button>
+            <el-button @click="getContent"> 获取内容  </el-button>
         </div>
 
-        <el-button @click="pushContent('LINK')"> 插入链接 </el-button>
-        <el-button @click="pushContent('IMG')"> 插入图片 </el-button>
-        <el-button @click="pushContent('VIDEO')"> 插入视频 </el-button>
+       
         <el-dialog
             :visible="customerLinkDialogVisble"
             :title="title"
-            width="60%"
+            width="40%"
             :append-to-body="true"
             >
             <component
@@ -20,9 +24,9 @@
                 :inject-data="form"
             />
             <el-row>
-                <el-col>
+                <el-col style="text-align:center;">
                     <el-button @click="cancel"> 取消 </el-button>
-                    <el-button @click="save"> 保存 </el-button>
+                    <el-button type="primary" @click="save"> 保存 </el-button>
                 </el-col>
             </el-row>
         </el-dialog>
@@ -69,9 +73,45 @@ export default {
        }
     },
     mounted(){
-        
+        this.createIframe()
     },
     methods:{
+        createIframe(){
+            let iframe = document.createElement('iframe');
+                // iframe.innerHTML = '111'
+                iframe.setAttribute('style','border:none;width:100%;height:100%;');
+                iframe.setAttribute('id','richTextIframe');
+                // iframe.setAttribute('id','richTextIframe')
+
+                
+
+              this.$refs.richText.appendChild(iframe);
+            //   console.log(iframe.contentWindow)
+            // iframe.contentWindow
+            // console.log()
+            iframe.contentWindow.document.querySelector('head').innerHTML = `
+            <style>
+                html,body{
+                    width: 100%;
+                    height: 100%;
+                    overflow: hidden;
+                    overflow-y: auto;
+                }
+                p{
+                    margin: 0;
+                    padding: 0;
+                }
+                p>img,p>video{
+                    max-height: 200px;
+                }
+                video{
+                    width: auto;
+                }
+
+            </style>
+            
+            `
+        },
         getRichText(){
             //获取富文本元素
             let richText = this.$refs.iframe.contentWindow.richText;
@@ -121,17 +161,18 @@ export default {
                 this.getRichText().setContent(data)
             }
         },
-        getSelection(){
-            console.log(this.getRichText().getSelection())
+        getContent(){
+           this.$refs.iframe.contentWindow.document.querySelector('body').focus()
         }
     }
 }
 </script>
 <style lang="scss" scoped>
-    #editor{
+    #richText{
        width:50% ;
        height:500px ;
        border: 1px solid #ccc ;
        margin: 20px ;
+       margin: 0 auto;
     }
  </style> 

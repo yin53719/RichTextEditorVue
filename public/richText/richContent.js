@@ -51,13 +51,16 @@ var richText = {
                 window.parent.richText(e)
             }
         }
+    },
+    getContent(){
+        return  document.querySelector('body').innerHTML
     }
 }
 
 
     
  window.onload = function(){
-    richText.init();
+    // richText.init();
  }   
 
 

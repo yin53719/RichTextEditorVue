@@ -62,7 +62,8 @@ var utils = {
             img.setAttribute('data-option',JSON.stringify(content))
         let p = document.createElement('p');
         p.appendChild(img)
-        document.querySelector('body').appendChild(p);
+        // document.querySelector('body').appendChild(p);
+        this.getSelection().getRangeAt(0).insertNode(p);
         window.parent.cancel()
     },
     createVideo(content,_thisDom){
@@ -79,8 +80,9 @@ var utils = {
             video.setAttribute('data-option',JSON.stringify(content))
             video.src=content.src;
         let p = document.createElement('p');
-        p.appendChild(video)
-        document.querySelector('body').appendChild(p);
+        p.appendChild(video);
+        this.getSelection().getRangeAt(0).insertNode(p);
+        // document.querySelector('body').appendChild(p);
         window.parent.cancel()
     }
 }
