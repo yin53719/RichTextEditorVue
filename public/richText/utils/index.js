@@ -28,9 +28,6 @@ var utils = {
             a.setAttribute('href',content.href)
             a.innerHTML=content.textValue;
             let children  = document.querySelector('body').children;
-
-            console.log(children)
-            debugger
             if(this.getBoolInsertNode() && document.querySelector('body').children.length>1){
                 console.log('指定位置插入')
                 this.getSelection().getRangeAt(0).insertNode(a);
@@ -62,8 +59,28 @@ var utils = {
                 window.parent.richText(e)
             }
             img.src=content.src;
-            console.log(content)
-        document.querySelector('body').appendChild(img);
+            img.setAttribute('data-option',JSON.stringify(content))
+        let p = document.createElement('p');
+        p.appendChild(img)
+        document.querySelector('body').appendChild(p);
+        window.parent.cancel()
+    },
+    createVideo(content,_thisDom){
+        
+
+        let video = document.createElement('video');;
+            video.ondblclick = (e)=>{
+                //向上发送事件
+                _thisDom = e.target;
+                window.parent.richText(e)
+            }
+            video.setAttribute('controls','controls')
+            video.setAttribute('autoplay','true')
+            video.setAttribute('data-option',JSON.stringify(content))
+            video.src=content.src;
+        let p = document.createElement('p');
+        p.appendChild(video)
+        document.querySelector('body').appendChild(p);
         window.parent.cancel()
     }
 }

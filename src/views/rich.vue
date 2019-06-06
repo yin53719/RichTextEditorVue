@@ -9,7 +9,7 @@
         <el-button @click="pushContent('VIDEO')"> 插入视频 </el-button>
         <el-dialog
             :visible="customerLinkDialogVisble"
-            title="修改链接"
+            :title="title"
             width="60%"
             :append-to-body="true"
             >
@@ -31,8 +31,8 @@
 
 <script>
 import Link  from '../components/RichText/Link';
-import IMG  from '../components/RichText/Img'
-
+import IMG  from '../components/RichText/Img';
+import VIDEO  from '../components/RichText/Video';
 export default {
     name:'Rich',
     components:{
@@ -55,6 +55,7 @@ export default {
                 type:''
             },
             isEdit:false,
+            title:'',
             settingView:''
         }
     },
@@ -82,23 +83,29 @@ export default {
                 type:type
             }
             if(type === 'LINK'){
-                this.settingView = Link
-            }
-            if(type === 'IMG'){
-                this.settingView = IMG
+                this.settingView = Link;
+                this.title = '插入链接';
+            }else if(type === 'IMG'){
+                this.settingView = IMG;
+                this.title = '插入图片';
+            }else if(type === 'VIDEO'){
+                this.settingView = VIDEO;
+                this.title = '插入视频';
             }
             this.customerLinkDialogVisble = true;
         },
-        updateContent(t,type){
+        updateContent(t){
+            console.log(t);
+            let type = t.target.nodeName;
+            this.form = JSON.parse(t.target.dataset.option);
             if(type === 'LINK'){
                 this.settingView = Link;
-                this.form.textValue = t.target.dataset;
-                this.form.href = t.target.href;
+                this.title = '修改链接';
             }else if(type === 'IMG'){
-                this.form.src = t.target.src
-                //'http://www.w3school.com.cn/i/eg_tulip.jpg'
+                this.title = '修改图片';
+            }else if(type === 'VIDEO'){
+                this.title = '修改视频';
             }
-            this.form.type = type
             this.isEdit = true;
             this.customerLinkDialogVisble = true;
         },
@@ -108,7 +115,6 @@ export default {
         },
         save(){
             let data = this.$refs.settingPanel.getData();
-            console.log(data)
             if(this.isEdit){
                 this.getRichText().updata(data)
             }else{

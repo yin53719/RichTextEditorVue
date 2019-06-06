@@ -4,7 +4,7 @@
                 <el-row>
                     <el-col>
                         <el-form-item label="" :label-width="'1px'">
-                             <img :src="form.src" alt="">
+                             <video :src="form.src" controls="controls" autoplay="true" >您的浏览器不支持 video 标签。</video>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -23,14 +23,14 @@ export default {
     data(){
         return {
             form:{
-                src:'http://www.w3school.com.cn/i/eg_tulip.jpg',
-                type:'IMG'
+                src:'https://oss-qa.roewe.com.cn/f_a74a4e0c-ff2e-4f3c-b9fc-e81463c22935.mp4',
+                type:'VIDEO'
             },
         }
     },
     created(){
         this.form = this.injectData;
-        this.form.src = 'http://www.w3school.com.cn/i/eg_tulip.jpg'
+        this.form.src = 'https://oss-qa.roewe.com.cn/f_a74a4e0c-ff2e-4f3c-b9fc-e81463c22935.mp4'
     },
     methods:{
         getData(){
@@ -41,5 +41,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+   video{
+       width: 100%;
+       max-height: 200px;
+   }
 </style>

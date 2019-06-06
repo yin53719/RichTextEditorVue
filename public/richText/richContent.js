@@ -28,6 +28,8 @@ var richText = {
             utils.createLink(content,this._thisDom)
         }else if(content.type ==='IMG'){
             utils.createImg(content,this._thisDom)
+        }else if(content.type ==='VIDEO'){
+            utils.createVideo(content,this._thisDom)
         }
     },
     //判断在末尾插入还是中间插入
