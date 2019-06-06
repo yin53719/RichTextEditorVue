@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
-import rich from './views/rich.vue';
+import rich from './views/Rich.vue';
 Vue.use(Router);
 
 export default new Router({
