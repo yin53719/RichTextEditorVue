@@ -72,6 +72,7 @@ const utils = {
     createVideo(content,_thisDoc){
         let video = document.createElement('video');;
         video.ondblclick = (e)=>{
+            e.preventDefault()
             //向上发送事件
             window.parent.richText(e)
         }
@@ -87,10 +88,12 @@ const utils = {
     }
 }
 
+export function getIframeWindow(id) {
+    return document.getElementById(id).contentWindow   
+} 
 export function getIframeElement(id) {
     return document.getElementById(id).contentWindow.document   
 } 
-
 
 export function setPoint(_this,node){
 
@@ -122,6 +125,33 @@ export function pushContent(content,_thisDoc){
 export function  updataContent(data,_thisElement){
     _thisElement.innerHTML = data.textValue;
     // window.parent.cancel()
+}
+
+export function fullScreen(){
+    var el = document.documentElement;
+    var rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen;      
+        if(typeof rfs != "undefined" && rfs) {
+            rfs.call(el);
+        };
+      return;
+}
+//退出全屏
+export  function exitScreen(){
+    if (document.exitFullscreen) {  
+        document.exitFullscreen();  
+    }  
+    else if (document.mozCancelFullScreen) {  
+        document.mozCancelFullScreen();  
+    }  
+    else if (document.webkitCancelFullScreen) {  
+        document.webkitCancelFullScreen();  
+    }  
+    else if (document.msExitFullscreen) {  
+        document.msExitFullscreen();  
+    } 
+    if(typeof cfs != "undefined" && cfs) {
+        cfs.call(el);
+    }
 }
 
 export default  utils 

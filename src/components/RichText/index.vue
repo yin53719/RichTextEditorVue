@@ -4,6 +4,8 @@
              <el-button @click="pushContent('LINK')"> 插入链接 </el-button>
             <el-button @click="pushContent('IMG')"> 插入图片 </el-button>
             <el-button @click="pushContent('VIDEO')"> 插入视频 </el-button>
+             <el-button @click="fullScreen"> 全屏 </el-button>
+             <el-button @click="exitScreen"> 退出全屏 </el-button>
         </div>
         <div id="richText" ref="richText">
             
@@ -35,7 +37,7 @@ import Link  from './Link';
 import IMG  from './Img';
 import VIDEO  from './Video';
 import iframeStyle from './style';
-import { getIframeElement ,setPoint ,pushContent,updataContent} from './utils'
+import { getIframeElement ,setPoint ,pushContent,updataContent ,fullScreen,getIframeWindow,exitScreen} from './utils'
 export default {
     name:'Rich',
     components:{
@@ -95,6 +97,7 @@ export default {
             let style = document.createElement('style');
             style.innerHTML = iframeStyle
             head.appendChild(style);
+            getIframeWindow(this.iframeId).fullScreen = fullScreen
             setPoint(getIframeElement(this.iframeId))
         },
         getRichText(){
@@ -151,6 +154,12 @@ export default {
         getHtml(){
             //返回富文本内容
             return getIframeElement(this.iframeId).querySelector('body').innerHTML
+        },
+        fullScreen(){
+            fullScreen();
+        },
+        exitScreen(){
+            exitScreen()
         }
     }
 }
